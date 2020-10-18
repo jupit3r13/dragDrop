@@ -23,7 +23,7 @@ function targetInfo(ev) {
   positionAtls[findArrayinx] = artikel;
 }
 
-const exSave = () => {
+const exportJs = () => {
   const jsonPos = JSON.stringify(positionAtls);
 
   console.log(jsonPos);
