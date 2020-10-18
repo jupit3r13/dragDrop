@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./DragDrop.css" />
+    <script src="./DragDrop.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container mt-5  justify-content-center">
+      <div class="">
+        <input type="text" id="spalten" class="form-control" placeholder="spalten Max =5" />
+        <input type="text" id="zeilen" class="form-control" placeholder="zeilen Max=8"/>
+        <button class="btn btn-primary  mt-2" onclick="generateDiv()">
+          generate
+        </button>
+      </div>
+      <div class="row mt-5">
+        <div class="col-3 ">
+          <h5 id="artikel1" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)" >
+            Artikel 1
+          </h5>
+          <h5 id="artikel2" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)">
+            Artikel 2
+          </h5>
+          <h5 id="artikel3" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)">
+            Artikel 3
+          </h5>
+          <h5 id="artikel4" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)">
+            Artikel 4
+          </h5>
+          <h5 id="artikel5" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)">
+            Artikel 5
+          </h5>
+          <h5 id="artikel6" draggable="true" ondragstart="drag(event)">
+            Artikel 6
+          </h5>
+          <h5 id="artikel7" draggable="true" ondragstart="drag(event)">
+            Artikel 7
+          </h5>
+          <h5 id="artikel8" draggable="true" ondragstart="drag(event)">
+            Artikel 8
+          </h5>
+          <h5 id="artikel9" draggable="true" ondragstart="drag(event)">
+            Artikel 9
+          </h5>
+          <h5 id="artikel10" draggable="true" ondragstart="drag(event)">
+            Artikel 10
+          </h5>
+        </div>
+        <div class="col-9">
+          <div
+            id="mainDiv"
+            style="border: solid 5px; width: 750px; height: 750px"
+            
+            class="row"
+          ></div>
+        </div>
+        <button class="btn btn-danger" onclick="exSave()" >save</button>
+        <p id="showPos"></p>
+      </div>
+    </div>
+  </body>
+</html>

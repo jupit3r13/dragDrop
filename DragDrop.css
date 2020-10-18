@@ -1,0 +1,122 @@
+#div1, #div2 {
+    float: left;
+    width: 100px;
+    height: 35px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    
+  }
+
+  .defaultDiv{
+    
+    width: 90px;
+    height: 90px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #9f9faa;
+  }
+
+  .pAppend{
+
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 0px;
+  }
+
+  .artikel1{
+    float: left;
+    width: 90px;
+    height: 90px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #d567df;
+  }
+  .artikel2{
+    float: left;
+    width: 90px;
+    height: 90px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #4b29ac;
+  } 
+  
+  .artikel3{
+    float: left;
+    width: 90px;
+    height: 90px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #ceb31b;
+  }
+
+  .artikel4{
+    float: left;
+    width: 90px;
+    height: 90px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #ce1b1b;
+  }
+
+  .artikel5{
+    float: left;
+    width: 90px;
+    height: 90px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #1bb9ce;
+  }
+  .artikel6{
+    float: left;
+    width: 90px;
+    height: 90px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #534a7c;
+  }
+  .artikel7{
+    float: left;
+    width: 90px;
+    height: 90px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #8f83aa;
+  }
+  .artikel8{
+    float: left;
+    width: 90px;
+    height: 90px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #1bce75;
+  }
+  .artikel9{
+    float: left;
+    width: 90px;
+    height: 90px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #e0f89d;
+  }
+  .artikel10{
+    float: left;
+    width: 90px;
+    height: 90px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #5389ec;
+  }
+  
