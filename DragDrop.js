@@ -11,18 +11,50 @@ const positionAtls = [
   { name: "artikel10", x: "", y: "" },
 ];
 
+
+
 const onDivEnter = (ev) =>{
 
     
-    console.log(ev.currentTarget.className);
+  if(ev.currentTarget.childElementCount == 0) {
+    ev.currentTarget.className = 'atlEnter';
+  }
    
    
-    
+}
 
+const dragExit = (ev)=>{
+  
+  if(ev.currentTarget.childElementCount == 0) {
+    ev.currentTarget.className = 'defaultDiv';
+  }
+ 
+
+}
+
+const dragEnd = (ev)=>{
+ 
+  var id = ev.dataTransfer.getData('id');
+  var parentDiv = ev.dataTransfer.getData('parentDiv');
+  document.querySelector(`#${parentDiv} > #${id}`).className ='defaultDiv';
+  
+  
+}
+
+function dragStart(ev) {
+ 
+ ev.dataTransfer.setData('id' , ev.currentTarget.id);
+ ev.dataTransfer.setData('parentDiv' , ev.currentTarget.parentElement.id);
+ 
+
+  
+  
+  
 }
 
 const removeArtikel = (ev)=>{
 
+  
   const myList = document.getElementById('myList');
   ev.target.style.visibility = 'hidden';
   ev.target.parentElement.id
@@ -67,9 +99,7 @@ const exportJs = () => {
   showPos.innerHTML = jsonPos;
 };
 
-function dragEnd(ev) {
-  // console.log(ev.currentTarget.id);
-}
+
 
 function allowDrop(ev) {
   ev.preventDefault();
@@ -83,11 +113,7 @@ function drag(ev) {
     
 }
 
-function dragStart(ev) {
 
-  console.log(ev);
-  ev.currentTarget.className = 'atlEnter';
-}
 
 function drop(ev) {
   ev.preventDefault();
@@ -98,53 +124,54 @@ function drop(ev) {
     
     ev.target.firstChild.firstElementChild.style.visibility = 'visible';
 
-
+    
     
     targetInfo(ev);
 
     
     switch (ev.currentTarget.lastChild.id) {
       case "artikel1":
-        
+        ev.currentTarget.className = "artikel1 ";
+       console.log(ev.currentTarget);
         
         break;
 
-      // case "artikel2":
-      //   ev.currentTarget.className = "artikel2 row align-items-center px-0";
+      case "artikel2":
+        ev.currentTarget.className = "artikel2";
 
-      //   break;
-      // case "artikel3":
-      //   ev.currentTarget.className = "artikel3 row align-items-center px-0";
+        break;
+      case "artikel3":
+        ev.currentTarget.className = "artikel3";
 
-      //   break;
-      // case "artikel4":
-      //   ev.currentTarget.className = "artikel4 row align-items-center px-0";
+        break;
+      case "artikel4":
+        ev.currentTarget.className = "artikel4";
 
-      //   break;
-      // case "artikel5":
-      //   ev.currentTarget.className = "artikel5 row align-items-center px-0";
+        break;
+      case "artikel5":
+        ev.currentTarget.className = "artikel5";
 
-      //   break;
-      //   case "artikel6":
-      //   ev.currentTarget.className = "artikel6 row align-items-center px-0";
+        break;
+        case "artikel6":
+        ev.currentTarget.className = "artikel6";
 
-      //   break;
-      //   case "artikel7":
-      //   ev.currentTarget.className = "artikel7 row align-items-center px-0";
+        break;
+        case "artikel7":
+        ev.currentTarget.className = "artikel7";
 
-      //   break;
-      //   case "artikel8":
-      //   ev.currentTarget.className = "artikel8 row align-items-center px-0";
+        break;
+        case "artikel8":
+        ev.currentTarget.className = "artikel8";
 
-      //   break;
-      //   case "artikel9":
-      //   ev.currentTarget.className = "artikel9 row align-items-center px-0";
+        break;
+        case "artikel9":
+        ev.currentTarget.className = "artikel9";
 
-      //   break;
-      //   case "artikel10":
-      //   ev.currentTarget.className = "artikel10 row align-items-center px-0";
+        break;
+        case "artikel10":
+        ev.currentTarget.className = "artikel10";
 
-      //   break;
+        break;
 
       default:
 
@@ -191,11 +218,17 @@ const generateDiv = () => {
         onDivEnter(event);
       }
 
+      divInner.ondragexit = (event)=>{
+        dragExit(event);
+      }
+     
       divInner.ondragstart = (event)=>{
         dragStart(event);
       }
-     
 
+      divInner.ondragend = (event)=>{
+        dragEnd(event);
+      }
 
       secondDiv.appendChild(divInner);
       
