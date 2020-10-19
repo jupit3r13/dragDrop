@@ -11,6 +11,15 @@ const positionAtls = [
   { name: "artikel10", x: "", y: "" },
 ];
 
+const onDivEnter = (ev) =>{
+
+    
+    console.log(ev.currentTarget.className);
+   
+   
+    
+
+}
 
 const removeArtikel = (ev)=>{
 
@@ -48,7 +57,9 @@ function targetInfo(ev) {
 }
 
 const exportJs = () => {
-  const jsonPos = JSON.stringify(positionAtls);
+
+  const filtredArtikel = positionAtls.filter((artikel) => artikel.x !== "");
+  const jsonPos = JSON.stringify(filtredArtikel);
 
   console.log(jsonPos);
 
@@ -64,6 +75,7 @@ function allowDrop(ev) {
   ev.preventDefault();
 }
 
+
 function drag(ev) {
   
   ev.dataTransfer.setData("text", ev.target.id);
@@ -72,7 +84,9 @@ function drag(ev) {
 }
 
 function dragStart(ev) {
-  
+
+  console.log(ev);
+  ev.currentTarget.className = 'atlEnter';
 }
 
 function drop(ev) {
@@ -173,7 +187,13 @@ const generateDiv = () => {
       divInner.ondrop = (event) => {
         drop(event);
       };
+      divInner.ondragenter = (event)=>{
+        onDivEnter(event);
+      }
 
+      divInner.ondragstart = (event)=>{
+        dragStart(event);
+      }
      
 
 
