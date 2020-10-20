@@ -35,6 +35,9 @@
     border-radius: 5px;
     background-color: #d567df;
   }
+
+
+
   .artikel2{
    
     width: 90px;
@@ -121,8 +124,11 @@
   }
   
   .close {
-    cursor: pointer;
+    
  
+  }
+  .close:hover{
+    cursor: pointer;
   }
 
   .atlEnter{

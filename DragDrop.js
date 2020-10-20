@@ -13,6 +13,8 @@ const positionAtls = [
 
 
 
+
+
 const onDivEnter = (ev) =>{
 
     
@@ -31,33 +33,29 @@ const dragExit = (ev)=>{
  
 
 }
+function dragStart(ev) {
+ 
+  ev.dataTransfer.setData('id' , ev.currentTarget.id);
+  ev.dataTransfer.setData('parentDiv' , ev.currentTarget.parentElement.id);
+  
+
+   
+ }
 
 const dragEnd = (ev)=>{
  
-  var id = ev.dataTransfer.getData('id');
-  var parentDiv = ev.dataTransfer.getData('parentDiv');
-  document.querySelector(`#${parentDiv} > #${id}`).className ='defaultDiv';
-  
-  
-}
-
-function dragStart(ev) {
- 
- ev.dataTransfer.setData('id' , ev.currentTarget.id);
- ev.dataTransfer.setData('parentDiv' , ev.currentTarget.parentElement.id);
  
 
   
-  
-  
 }
+
+
 
 const removeArtikel = (ev)=>{
 
   
   const myList = document.getElementById('myList');
   ev.target.style.visibility = 'hidden';
-  ev.target.parentElement.id
   const findArrayinx = positionAtls.findIndex(
     (ind) => ind.name == ev.target.parentElement.id
   );
@@ -93,7 +91,7 @@ const exportJs = () => {
   const filtredArtikel = positionAtls.filter((artikel) => artikel.x !== "");
   const jsonPos = JSON.stringify(filtredArtikel);
 
-  console.log(jsonPos);
+  
 
   const showPos = document.getElementById('showPos');
   showPos.innerHTML = jsonPos;
@@ -132,45 +130,66 @@ function drop(ev) {
     switch (ev.currentTarget.lastChild.id) {
       case "artikel1":
         ev.currentTarget.className = "artikel1 ";
-       console.log(ev.currentTarget);
+
+        var id = ev.dataTransfer.getData('id');
+        var parentDiv = ev.dataTransfer.getData('parentDiv');
+        document.querySelector(`#${parentDiv} > #${id}`).className ='defaultDiv';
         
         break;
 
       case "artikel2":
         ev.currentTarget.className = "artikel2";
-
+        var id = ev.dataTransfer.getData('id');
+        var parentDiv = ev.dataTransfer.getData('parentDiv');
+        document.querySelector(`#${parentDiv} > #${id}`).className ='defaultDiv';
         break;
       case "artikel3":
         ev.currentTarget.className = "artikel3";
-
+        var id = ev.dataTransfer.getData('id');
+        var parentDiv = ev.dataTransfer.getData('parentDiv');
+        document.querySelector(`#${parentDiv} > #${id}`).className ='defaultDiv';
         break;
       case "artikel4":
         ev.currentTarget.className = "artikel4";
-
+        var id = ev.dataTransfer.getData('id');
+        var parentDiv = ev.dataTransfer.getData('parentDiv');
+        document.querySelector(`#${parentDiv} > #${id}`).className ='defaultDiv';
         break;
       case "artikel5":
         ev.currentTarget.className = "artikel5";
-
+        var id = ev.dataTransfer.getData('id');
+        var parentDiv = ev.dataTransfer.getData('parentDiv');
+        document.querySelector(`#${parentDiv} > #${id}`).className ='defaultDiv';
         break;
         case "artikel6":
         ev.currentTarget.className = "artikel6";
-
+        var id = ev.dataTransfer.getData('id');
+        var parentDiv = ev.dataTransfer.getData('parentDiv');
+        document.querySelector(`#${parentDiv} > #${id}`).className ='defaultDiv';
         break;
         case "artikel7":
         ev.currentTarget.className = "artikel7";
-
+        var id = ev.dataTransfer.getData('id');
+        var parentDiv = ev.dataTransfer.getData('parentDiv');
+        document.querySelector(`#${parentDiv} > #${id}`).className ='defaultDiv';
         break;
         case "artikel8":
         ev.currentTarget.className = "artikel8";
-
+        var id = ev.dataTransfer.getData('id');
+        var parentDiv = ev.dataTransfer.getData('parentDiv');
+        document.querySelector(`#${parentDiv} > #${id}`).className ='defaultDiv';
         break;
         case "artikel9":
         ev.currentTarget.className = "artikel9";
-
+        var id = ev.dataTransfer.getData('id');
+        var parentDiv = ev.dataTransfer.getData('parentDiv');
+        document.querySelector(`#${parentDiv} > #${id}`).className ='defaultDiv';
         break;
         case "artikel10":
         ev.currentTarget.className = "artikel10";
-
+        var id = ev.dataTransfer.getData('id');
+        var parentDiv = ev.dataTransfer.getData('parentDiv');
+        document.querySelector(`#${parentDiv} > #${id}`).className ='defaultDiv';
         break;
 
       default:
