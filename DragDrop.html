@@ -7,7 +7,12 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
-    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+      integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+      crossorigin="anonymous"
+    />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -15,22 +20,44 @@
     <script src="./DragDrop.js"></script>
     <title>Document</title>
   </head>
-  <body>
-    <div class="container mt-5  justify-content-center">
+  <body onload="showAtlMenu(positionAtls)">
+    <div class="container mt-5 justify-content-center">
       <div class="">
-        <input type="text" id="spalten" class="form-control" placeholder="spalten Max =5" />
-        <input type="text" id="zeilen" class="form-control" placeholder="zeilen Max=8"/>
-        <button class="btn btn-primary  mt-2" onclick="generateDiv()">
+        <input
+          type="text"
+          id="spalten"
+          class="form-control"
+          placeholder="spalten Max =5"
+        />
+        <input
+          type="text"
+          id="zeilen"
+          class="form-control"
+          placeholder="zeilen Max=8"
+        />
+        <button class="btn btn-primary mt-2" onclick="generateDiv()">
           generate
         </button>
       </div>
       <div class="row mt-5">
-        <div id="myList" class="col-3 ">
-          <li class="list-unstyled" id="artikel1" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)" >
-            <span id="closeBtn" style="visibility: hidden;" class="close" onclick="removeArtikel(event)">x</span>
-            Artikel 1 
+        <div id="myList" class="col-3">
+          <!--<li
+            class="list-unstyled"
+            id="artikel1"
+            draggable="true"
+            ondragstart="drag(event)"
+            ondragend="dragEnd(event)"
+          >
+            <span
+              id="closeBtn"
+              style="visibility: hidden"
+              class="close"
+              onclick="removeArtikel(event)"
+              >x</span
+            >
+            Artikel 1
           </li>
-          <li class="list-unstyled" id="artikel2" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)">
+           <li class="list-unstyled" id="artikel2" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)">
             Artikel 2 <span id="closeBtn" style="visibility: hidden;" class="close" onclick="removeArtikel(event)">x</span>
           </li>
           <li class="list-unstyled" id="artikel3" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)">
@@ -53,20 +80,19 @@
           </li>
           <li class="list-unstyled" id="artikel9" draggable="true" ondragstart="drag(event)">
             Artikel 9 <span id="closeBtn" style="visibility: hidden;" class="close" onclick="removeArtikel(event)">x</span>
-          </li>
+          </li> 
           <li class="list-unstyled" id="artikel10" draggable="true" ondragstart="drag(event)">
             Artikel 10 <span id="closeBtn" style="visibility: hidden;" class="close" onclick="removeArtikel(event)">x</span>
-          </li>
+          </li> -->
         </div>
         <div class="col-9">
           <div
             id="mainDiv"
             style="border: solid 5px; width: 750px; height: 750px"
-            
             class="row"
           ></div>
         </div>
-        <button class="btn btn-danger" onclick="exportJs()" >save</button>
+        <button class="btn btn-danger" onclick="exportJs()">save</button>
         <p id="showPos"></p>
       </div>
     </div>
