@@ -54,6 +54,17 @@ const positionAtls = [
     x: "",
     y: "",
   },
+  {
+    id: 518,
+    name: "test20",
+    name_in_checkout: "test19",
+    color: "#33ff33",
+    price: "0.00",
+    deposit: 1,
+    discountable: 1,
+    x: "",
+    y: "",
+  },
 ];
 
 const showAtlMenu = (arrayList) => {
@@ -70,9 +81,9 @@ const showAtlMenu = (arrayList) => {
     myLiMenu.ondragstart = (event) => {
       dragStart(event);
     };
-    myLiMenu.ondragend = (event) => {
-      dragEnd(event);
-    };
+    // myLiMenu.ondragend = (event) => {
+    //   dragEnd(event);
+    // };
 
     menuDiv.appendChild(myLiMenu);
   });
@@ -84,12 +95,12 @@ const isDark = (hexcolor) => {
   var g = parseInt(hexcolor.substr(3, 2), 16);
   var b = parseInt(hexcolor.substr(4, 2), 16);
   var rgb = r * 0.299 + g * 0.587 + b * 0.114;
-  
-  if(rgb <= 186 ) {
+
+  if (rgb <= 186) {
     return true;
-  } else{
+  } else {
     return false;
-  }  
+  }
 };
 
 const onDivEnter = (ev) => {
@@ -104,9 +115,16 @@ const dragExit = (ev) => {
   }
 };
 function dragStart(ev) {
-  
   ev.dataTransfer.setData("id", ev.currentTarget.id);
   ev.dataTransfer.setData("parentDiv", ev.currentTarget.parentElement.id);
+}
+
+function dragSFromHolder(ev) {
+  ev.dataTransfer.setData("divData", ev.target.parentElement.id);
+  const name = ev.target.children[0].innerText;
+  const findInx = positionAtls.findIndex((ind) => ind.name == name);
+
+  ev.dataTransfer.setData("id", positionAtls[findInx].id);
 }
 
 const dragEnd = (ev) => {};
@@ -127,81 +145,59 @@ const removeArtikel = (ev) => {
   myList.appendChild(ev.target.parentElement);
 };
 
-const handleRemove = (ev)=>{
-    
- 
-  
-  
-  const NameRemAtl = ev.target.parentElement.parentElement.children[1].children[0].innerText;
+const handleRemove = (ev) => {
+  const NameRemAtl =
+    ev.target.parentElement.parentElement.children[1].children[0].innerText;
 
-  const findArrayinx = positionAtls.findIndex(
-    (ind) => ind.name == NameRemAtl
-  );
+  const findArrayinx = positionAtls.findIndex((ind) => ind.name == NameRemAtl);
 
   const findDivList = document.getElementById("myList");
   const myLiMenu = document.createElement("li");
   myLiMenu.className = "list-unstyled col";
-  myLiMenu.draggable= true;
+  myLiMenu.draggable = true;
   myLiMenu.innerHTML = NameRemAtl;
-  myLiMenu.id =positionAtls[findArrayinx].id;
+  myLiMenu.id = positionAtls[findArrayinx].id;
   myLiMenu.ondragstart = (event) => {
     dragStart(event);
   };
-  myLiMenu.ondragend = (event) => {
-    dragEnd(event);
-  };
+  // myLiMenu.ondragend = (event) => {
+  //   dragEnd(event);
+  // };
   findDivList.appendChild(myLiMenu);
-  
-  const mainEl =ev.target.parentElement.parentElement.children;
-  ev.target.parentElement.parentElement.style.backgroundColor = '#9f9faa';
-  ev.target.parentElement.parentElement.children[1].i
 
-  
-  mainEl[0].children[0].style.visibility = 'hidden';
-  mainEl[1].children[0].innerHTML = 'keine Auswahl';
-  mainEl[1].style.color = '#000000'; 
-  mainEl[1].children[0].style.fontSize = '13px';
-  
-  mainEl[2].children[0].style.visibility = 'hidden';  
-  mainEl[2].children[1].style.visibility = 'hidden';  
-  mainEl[2].children[2].style.visibility = 'hidden';  
-    
-    
-    
-    
-    
-}
+  const mainEl = ev.target.parentElement.parentElement.children;
 
-const xdivOndragEnter= (ev)=>{
-
-  
-  const tempDiv = document.createElement("div");
-  
-  
-  const targetId = ev.dataTransfer.getData("id");
-  const findArrayinx = positionAtls.findIndex(
-    (ind) => ind.id == targetId
+  const myelemnt = document.getElementById(
+    ev.target.parentElement.parentElement.id
   );
-  
 
+  myelemnt.removeChild(myelemnt.lastChild);
+  console.log(myelemnt);
+  ev.target.parentElement.parentElement.style.backgroundColor = "#9f9faa";
 
-    
+  mainEl[0].children[0].style.visibility = "hidden";
+  mainEl[1].children[0].innerHTML = "keine Auswahl";
+  mainEl[1].style.color = "#000000";
+  mainEl[1].children[0].style.fontSize = "13px";
+
+  mainEl[2].children[0].style.visibility = "hidden";
+  mainEl[2].children[1].style.visibility = "hidden";
+  mainEl[2].children[2].style.visibility = "hidden";
+};
+const onDragEndFromHolder = (ev) => {};
+
+const xdivOndragEnter = (ev) => {
+  const tempDiv = document.createElement("div");
+
+  const targetId = ev.dataTransfer.getData("id");
+  const findArrayinx = positionAtls.findIndex((ind) => ind.id == targetId);
+
   document.getElementById(ev.dataTransfer.getData("id"));
+};
 
-      
+const onInnerEnter = (ev) => {};
 
-}
-
-const onInnerEnter=(ev)=>{
- 
-  
-  
-}
-
-const onInnerExit=(ev)=>{
- 
-  
-}
+const onInnerExit = (ev) => {};
 
 function targetInfo(ev) {
   const findArrayinx = positionAtls.findIndex(
@@ -231,84 +227,75 @@ function drag(ev) {
   ev.dataTransfer.setData("text", ev.target.id);
 }
 
-const  dropFromHolder = (ev)=>{
-  ev.preventDefault();
-
-  
-
-
-}
-
+const dropFromHolder = (ev) => {};
 
 function dropFromList(ev) {
   ev.preventDefault();
- 
-    
-    
+  console.log(ev.currentTarget);
+  console.log(ev.currentTarget.children.length);
+  if (ev.currentTarget.children.length < 4) {
     const data = ev.dataTransfer.getData("id");
-    var itemDrag =ev.target.appendChild(document.getElementById(data));
-    itemDrag.style.display = 'none';
-    
-   
-    
-    const findInx = positionAtls.findIndex((artikel)=> artikel.id == data);
-    
+
+    console.log(data);
+    var itemDrag = ev.currentTarget.appendChild(document.getElementById(data));
+    itemDrag.style.display = "none";
+
+    const findInx = positionAtls.findIndex((artikel) => artikel.id == data);
+
     ev.currentTarget.style.backgroundColor = positionAtls[findInx].color;
-    
-    ev.currentTarget.children[0].children[0].style.visibility = 'visible';
-   
-    
+
+    ev.currentTarget.children[0].children[0].style.visibility = "visible";
+
     if (isDark(positionAtls[findInx].color)) {
-      ev.currentTarget.children[0].style.color = 'white';
-      ev.currentTarget.children[1].style.color = 'white';
-      ev.currentTarget.children[2].children[2].style.color = 'white';
-      ev.currentTarget.children[2].children[0].style.color = 'white';
-      ev.currentTarget.children[2].children[1].style.color = 'white';
+      ev.currentTarget.children[0].style.color = "#1a0000";
+      ev.currentTarget.children[1].style.color = "white";
+      ev.currentTarget.children[2].children[2].style.color = "white";
+      ev.currentTarget.children[2].children[0].style.color = "white";
+      ev.currentTarget.children[2].children[1].style.color = "white";
     }
 
     if (!isDark(positionAtls[findInx].color)) {
-      ev.currentTarget.children[0].style.color = '#1a0000';
-      ev.currentTarget.children[1].style.color = '#1a0000';
-      ev.currentTarget.children[2].children[2].style.color = '#1a0000';
-      ev.currentTarget.children[2].children[0].style.color = '#1a0000';
-      ev.currentTarget.children[2].children[1].style.color = '#1a0000';
+      ev.currentTarget.children[0].style.color = "#1a0000";
+      ev.currentTarget.children[1].style.color = "#1a0000";
+      ev.currentTarget.children[2].children[2].style.color = "#1a0000";
+      ev.currentTarget.children[2].children[0].style.color = "#1a0000";
+      ev.currentTarget.children[2].children[1].style.color = "#1a0000";
     }
 
-    
-    ev.currentTarget.children[2].children[2].style.visibility = 'visible';
-    ev.currentTarget.children[1].children[0].innerText = positionAtls[findInx].name;
-    ev.currentTarget.children[2].children[2].innerHTML = positionAtls[findInx].price;
+    ev.currentTarget.children[2].children[2].style.visibility = "visible";
+    ev.currentTarget.children[1].children[0].innerText =
+      positionAtls[findInx].name;
+    ev.currentTarget.children[2].children[2].innerHTML =
+      positionAtls[findInx].price;
 
-    if(positionAtls[findInx].deposit === 1) {
-      ev.currentTarget.children[2].children[0].style.visibility = 'visible';
-    } else if(positionAtls[findInx].deposit === 0) {
-      
-      ev.currentTarget.children[2].children[0].style.visibility = 'hidden';
+    if (positionAtls[findInx].deposit === 1) {
+      ev.currentTarget.children[2].children[0].style.visibility = "visible";
+    } else if (positionAtls[findInx].deposit === 0) {
+      ev.currentTarget.children[2].children[0].style.visibility = "hidden";
     }
 
     if (positionAtls[findInx].discountable === 1) {
-      ev.currentTarget.children[2].children[1].style.visibility = 'visible';
-    } else if(positionAtls[findInx].discountable === 0){
-      ev.currentTarget.children[2].children[1].style.visibility = 'hidden';
+      ev.currentTarget.children[2].children[1].style.visibility = "visible";
+    } else if (positionAtls[findInx].discountable === 0) {
+      ev.currentTarget.children[2].children[1].style.visibility = "hidden";
     }
+  } else {
+    console.log(`nemishe khosgele`);
+  }
 
-    
-
-    
-
-    // targetInfo(ev);
-
-    // switch (ev.currentTarget.lastChild.id) {
-    //   case "artikel1":
-    //     ev.currentTarget.className = "artikel1 ";
-
-    //     var id = ev.dataTransfer.getData("id");
-    //     var parentDiv = ev.dataTransfer.getData("parentDiv");
-    //     document.querySelector(`#${parentDiv} > #${id}`).className =
-    //       "defaultDiv";
-
-   
   
+
+ 
+  // targetInfo(ev);
+
+  // switch (ev.currentTarget.lastChild.id) {
+  //   case "artikel1":
+  //     ev.currentTarget.className = "artikel1 ";
+
+  //     var id = ev.dataTransfer.getData("id");
+  //     var parentDiv = ev.dataTransfer.getData("parentDiv");
+  //     document.querySelector(`#${parentDiv} > #${id}`).className =
+  //       "defaultDiv";
 }
 
 const generateDiv = () => {
@@ -320,27 +307,26 @@ const generateDiv = () => {
     const xDiv = document.createElement("div");
     xDiv.className = "col";
     xDiv.id = `Xdiv${index}`;
-    xDiv.ondragenter = (event)=>{
+    xDiv.ondragenter = (event) => {
       xdivOndragEnter(event);
-    }
-    xDiv.ondrag = (event)=>{
+    };
+    xDiv.ondrag = (event) => {
       allowDrop(event);
-    }
-   
+    };
+
     mainDiv.appendChild(xDiv);
 
     for (let ind = 0; ind < zeilen.value; ind++) {
       const secondDiv = document.getElementById(`Xdiv${index}`);
-      // const childInner = document.createTextNode("chetori");
-      // divInner.appendChild(childInner);
 
       const divInner = document.createElement("div");
       const divIn1 = document.createElement("div");
-      const divIn2= document.createElement("div");
+      const divIn2 = document.createElement("div");
       const divIn3 = document.createElement("div");
-      divInner.id = `ydiv${ind}`;
+      divInner.id = `Xdiv${index}ydiv${ind}`;
       divInner.className = "defaultDiv ";
       divIn2.draggable = true;
+      divIn2.className = "text-center";
       divInner.appendChild(divIn1);
       divInner.appendChild(divIn2);
       divInner.appendChild(divIn3);
@@ -351,29 +337,35 @@ const generateDiv = () => {
       const discountable = document.createElement("i");
       const price = document.createElement("i");
       deposit.className = "fas fa-recycle";
-      deposit.style.visibility = 'hidden';
+      deposit.style.visibility = "hidden";
       removeAtk.className = "fas fa-times-circle  text-left ";
-      removeAtk.style.visibility = 'hidden';
+      removeAtk.style.visibility = "hidden";
       removeAtk.style.cursor = "pointer";
-      removeAtk.onclick = (event)=>{
+      removeAtk.onclick = (event) => {
         handleRemove(event);
       };
-      
+
       discountable.className = "fas fa-percentage ml-1";
-      discountable.style.visibility = 'hidden';
-      
+      discountable.style.visibility = "hidden";
 
       price.innerHTML = "0.00";
-      price.className = 'float-right';
-      price.style.visibility = 'hidden';
-      nameAtk.innerHTML= 'keine Auswahl';
-      nameAtk.ondrop = (event)=>{
-        dropFromHolder(event)
+      price.className = "float-right";
+      price.style.visibility = "hidden";
+      nameAtk.innerHTML = "keine Auswahl";
+      nameAtk.ondrop = (event) => {
+        dropFromHolder(event);
       };
 
-      nameAtk.style.fontSize = '13px';
+      nameAtk.style.fontSize = "13px";
+
       divIn1.appendChild(removeAtk);
       divIn2.appendChild(nameAtk);
+      divIn2.ondragstart = (event) => {
+        dragSFromHolder(event);
+      };
+      divIn2.ondragend = (event) => {
+        onDragEndFromHolder(event);
+      };
       divIn3.appendChild(deposit);
       divIn3.appendChild(discountable);
       divIn3.appendChild(price);
@@ -392,13 +384,13 @@ const generateDiv = () => {
         onInnerExit(event);
       };
 
-      divInner.ondragstart = (event) => {
-        dragStart(event);
-      };
+      // divInner.ondragstart = (event) => {
+      //   dragStart(event);
+      // };
 
-      divInner.ondragend = (event) => {
-        dragEnd(event);
-      };
+      // divInner.ondragend = (event) => {
+      //   dragEnd(event);
+      // };
 
       secondDiv.appendChild(divInner);
     }
