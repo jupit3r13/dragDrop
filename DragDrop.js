@@ -78,6 +78,20 @@ const showAtlMenu = (arrayList) => {
   });
 };
 
+const isDark = (hexcolor) => {
+  var input = document.getElementById("input");
+  var r = parseInt(hexcolor.substr(1, 2), 16);
+  var g = parseInt(hexcolor.substr(3, 2), 16);
+  var b = parseInt(hexcolor.substr(4, 2), 16);
+  var rgb = r * 0.299 + g * 0.587 + b * 0.114;
+  
+  if(rgb <= 186 ) {
+    return true;
+  } else{
+    return false;
+  }  
+};
+
 const onDivEnter = (ev) => {
   if (ev.currentTarget.childElementCount == 0) {
     ev.currentTarget.className = "atlEnter";
@@ -90,8 +104,8 @@ const dragExit = (ev) => {
   }
 };
 function dragStart(ev) {
+  
   ev.dataTransfer.setData("id", ev.currentTarget.id);
-  console.log(ev.currentTarget.id);
   ev.dataTransfer.setData("parentDiv", ev.currentTarget.parentElement.id);
 }
 
@@ -112,6 +126,82 @@ const removeArtikel = (ev) => {
 
   myList.appendChild(ev.target.parentElement);
 };
+
+const handleRemove = (ev)=>{
+    
+ 
+  
+  
+  const NameRemAtl = ev.target.parentElement.parentElement.children[1].children[0].innerText;
+
+  const findArrayinx = positionAtls.findIndex(
+    (ind) => ind.name == NameRemAtl
+  );
+
+  const findDivList = document.getElementById("myList");
+  const myLiMenu = document.createElement("li");
+  myLiMenu.className = "list-unstyled col";
+  myLiMenu.draggable= true;
+  myLiMenu.innerHTML = NameRemAtl;
+  myLiMenu.id =positionAtls[findArrayinx].id;
+  myLiMenu.ondragstart = (event) => {
+    dragStart(event);
+  };
+  myLiMenu.ondragend = (event) => {
+    dragEnd(event);
+  };
+  findDivList.appendChild(myLiMenu);
+  
+  const mainEl =ev.target.parentElement.parentElement.children;
+  ev.target.parentElement.parentElement.style.backgroundColor = '#9f9faa';
+  ev.target.parentElement.parentElement.children[1].i
+
+  
+  mainEl[0].children[0].style.visibility = 'hidden';
+  mainEl[1].children[0].innerHTML = 'keine Auswahl';
+  mainEl[1].style.color = '#000000'; 
+  mainEl[1].children[0].style.fontSize = '13px';
+  
+  mainEl[2].children[0].style.visibility = 'hidden';  
+  mainEl[2].children[1].style.visibility = 'hidden';  
+  mainEl[2].children[2].style.visibility = 'hidden';  
+    
+    
+    
+    
+    
+}
+
+const xdivOndragEnter= (ev)=>{
+
+  
+  const tempDiv = document.createElement("div");
+  
+  
+  const targetId = ev.dataTransfer.getData("id");
+  const findArrayinx = positionAtls.findIndex(
+    (ind) => ind.id == targetId
+  );
+  
+
+
+    
+  document.getElementById(ev.dataTransfer.getData("id"));
+
+      
+
+}
+
+const onInnerEnter=(ev)=>{
+ 
+  
+  
+}
+
+const onInnerExit=(ev)=>{
+ 
+  
+}
 
 function targetInfo(ev) {
   const findArrayinx = positionAtls.findIndex(
@@ -141,21 +231,52 @@ function drag(ev) {
   ev.dataTransfer.setData("text", ev.target.id);
 }
 
-function drop(ev) {
+const  dropFromHolder = (ev)=>{
   ev.preventDefault();
-  if (ev.target.childNodes.length < 3) {
-    
-    console.log(ev.currentTarget);
-    console.log(ev.currentTarget.children[2].children[0]);
-    
-    var data = ev.dataTransfer.getData("id");
-    const itemList = document.getElementById(data);
-    itemList.style.visibility = 'hidden';
 
+  
+
+
+}
+
+
+function dropFromList(ev) {
+  ev.preventDefault();
+ 
+    
+    
+    const data = ev.dataTransfer.getData("id");
+    var itemDrag =ev.target.appendChild(document.getElementById(data));
+    itemDrag.style.display = 'none';
+    
+   
+    
     const findInx = positionAtls.findIndex((artikel)=> artikel.id == data);
-
+    
     ev.currentTarget.style.backgroundColor = positionAtls[findInx].color;
-    ev.currentTarget.children[1].innerText = positionAtls[findInx].name;
+    
+    ev.currentTarget.children[0].children[0].style.visibility = 'visible';
+   
+    
+    if (isDark(positionAtls[findInx].color)) {
+      ev.currentTarget.children[0].style.color = 'white';
+      ev.currentTarget.children[1].style.color = 'white';
+      ev.currentTarget.children[2].children[2].style.color = 'white';
+      ev.currentTarget.children[2].children[0].style.color = 'white';
+      ev.currentTarget.children[2].children[1].style.color = 'white';
+    }
+
+    if (!isDark(positionAtls[findInx].color)) {
+      ev.currentTarget.children[0].style.color = '#1a0000';
+      ev.currentTarget.children[1].style.color = '#1a0000';
+      ev.currentTarget.children[2].children[2].style.color = '#1a0000';
+      ev.currentTarget.children[2].children[0].style.color = '#1a0000';
+      ev.currentTarget.children[2].children[1].style.color = '#1a0000';
+    }
+
+    
+    ev.currentTarget.children[2].children[2].style.visibility = 'visible';
+    ev.currentTarget.children[1].children[0].innerText = positionAtls[findInx].name;
     ev.currentTarget.children[2].children[2].innerHTML = positionAtls[findInx].price;
 
     if(positionAtls[findInx].deposit === 1) {
@@ -171,7 +292,7 @@ function drop(ev) {
       ev.currentTarget.children[2].children[1].style.visibility = 'hidden';
     }
 
-    //ev.target.appendChild(document.getElementById(data));
+    
 
     
 
@@ -186,78 +307,8 @@ function drop(ev) {
     //     document.querySelector(`#${parentDiv} > #${id}`).className =
     //       "defaultDiv";
 
-    //     break;
-
-    //   case "artikel2":
-    //     ev.currentTarget.className = "artikel2";
-    //     var id = ev.dataTransfer.getData("id");
-    //     var parentDiv = ev.dataTransfer.getData("parentDiv");
-    //     document.querySelector(`#${parentDiv} > #${id}`).className =
-    //       "defaultDiv";
-    //     break;
-    //   case "artikel3":
-    //     ev.currentTarget.className = "artikel3";
-    //     var id = ev.dataTransfer.getData("id");
-    //     var parentDiv = ev.dataTransfer.getData("parentDiv");
-    //     document.querySelector(`#${parentDiv} > #${id}`).className =
-    //       "defaultDiv";
-    //     break;
-    //   case "artikel4":
-    //     ev.currentTarget.className = "artikel4";
-    //     var id = ev.dataTransfer.getData("id");
-    //     var parentDiv = ev.dataTransfer.getData("parentDiv");
-    //     document.querySelector(`#${parentDiv} > #${id}`).className =
-    //       "defaultDiv";
-    //     break;
-    //   case "artikel5":
-    //     ev.currentTarget.className = "artikel5";
-    //     var id = ev.dataTransfer.getData("id");
-    //     var parentDiv = ev.dataTransfer.getData("parentDiv");
-    //     document.querySelector(`#${parentDiv} > #${id}`).className =
-    //       "defaultDiv";
-    //     break;
-    //   case "artikel6":
-    //     ev.currentTarget.className = "artikel6";
-    //     var id = ev.dataTransfer.getData("id");
-    //     var parentDiv = ev.dataTransfer.getData("parentDiv");
-    //     document.querySelector(`#${parentDiv} > #${id}`).className =
-    //       "defaultDiv";
-    //     break;
-    //   case "artikel7":
-    //     ev.currentTarget.className = "artikel7";
-    //     var id = ev.dataTransfer.getData("id");
-    //     var parentDiv = ev.dataTransfer.getData("parentDiv");
-    //     document.querySelector(`#${parentDiv} > #${id}`).className =
-    //       "defaultDiv";
-    //     break;
-    //   case "artikel8":
-    //     ev.currentTarget.className = "artikel8";
-    //     var id = ev.dataTransfer.getData("id");
-    //     var parentDiv = ev.dataTransfer.getData("parentDiv");
-    //     document.querySelector(`#${parentDiv} > #${id}`).className =
-    //       "defaultDiv";
-    //     break;
-    //   case "artikel9":
-    //     ev.currentTarget.className = "artikel9";
-    //     var id = ev.dataTransfer.getData("id");
-    //     var parentDiv = ev.dataTransfer.getData("parentDiv");
-    //     document.querySelector(`#${parentDiv} > #${id}`).className =
-    //       "defaultDiv";
-    //     break;
-    //   case "artikel10":
-    //     ev.currentTarget.className = "artikel10";
-    //     var id = ev.dataTransfer.getData("id");
-    //     var parentDiv = ev.dataTransfer.getData("parentDiv");
-    //     document.querySelector(`#${parentDiv} > #${id}`).className =
-    //       "defaultDiv";
-    //     break;
-
-    //   default:
-    //     break;
-    // }
-  }else{
-    console.log('nemishe ');
-  }
+   
+  
 }
 
 const generateDiv = () => {
@@ -269,6 +320,12 @@ const generateDiv = () => {
     const xDiv = document.createElement("div");
     xDiv.className = "col";
     xDiv.id = `Xdiv${index}`;
+    xDiv.ondragenter = (event)=>{
+      xdivOndragEnter(event);
+    }
+    xDiv.ondrag = (event)=>{
+      allowDrop(event);
+    }
    
     mainDiv.appendChild(xDiv);
 
@@ -295,14 +352,26 @@ const generateDiv = () => {
       const price = document.createElement("i");
       deposit.className = "fas fa-recycle";
       deposit.style.visibility = 'hidden';
-      removeAtk.className = "fas fa-times-circle w-100 text-left ";
+      removeAtk.className = "fas fa-times-circle  text-left ";
+      removeAtk.style.visibility = 'hidden';
+      removeAtk.style.cursor = "pointer";
+      removeAtk.onclick = (event)=>{
+        handleRemove(event);
+      };
+      
       discountable.className = "fas fa-percentage ml-1";
       discountable.style.visibility = 'hidden';
       
 
       price.innerHTML = "0.00";
       price.className = 'float-right';
-      nameAtk.innerHTML= 'defaultname';
+      price.style.visibility = 'hidden';
+      nameAtk.innerHTML= 'keine Auswahl';
+      nameAtk.ondrop = (event)=>{
+        dropFromHolder(event)
+      };
+
+      nameAtk.style.fontSize = '13px';
       divIn1.appendChild(removeAtk);
       divIn2.appendChild(nameAtk);
       divIn3.appendChild(deposit);
@@ -313,14 +382,14 @@ const generateDiv = () => {
         allowDrop(event);
       };
       divInner.ondrop = (event) => {
-        drop(event);
+        dropFromList(event);
       };
       divInner.ondragenter = (event) => {
-        onDivEnter(event);
+        onInnerEnter(event);
       };
 
       divInner.ondragexit = (event) => {
-        dragExit(event);
+        onInnerExit(event);
       };
 
       divInner.ondragstart = (event) => {
