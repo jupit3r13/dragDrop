@@ -63,6 +63,10 @@ const positionAtls = [
 var dragFromPlace = false;
 var dragFromList = false;
 
+
+
+
+
 const showAtlMenu = (arrayList) => {
   arrayList.map((lists) => {
     const menuDiv = document.getElementById("myList");
@@ -77,6 +81,7 @@ const showAtlMenu = (arrayList) => {
     myLiMenu.ondragstart = (event) => {
       dragStart(event);
     };
+    
 
     menuDiv.appendChild(myLiMenu);
   });
@@ -96,16 +101,17 @@ const isDark = (hexcolor) => {
   }
 };
 
-function dragStart(ev) {
+const dragStart=(ev)=> {
   ev.dataTransfer.setData("id", ev.currentTarget.id);
   ev.dataTransfer.setData("parentDiv", ev.currentTarget.parentElement.id);
+  
   dragFromList = true;
 }
 
-function dragSFromHolder(ev) {
+const dragSFromHolder=(ev)=> {
   ev.dataTransfer.setData("divData", ev.target.parentElement.id);
+  
 
-  ///////////////////////////////////////////////////////////////////////////////
   dragFromPlace = true;
 
   const name = ev.target.children[0].innerText;
@@ -154,17 +160,6 @@ const handleRemove = (ev) => {
       mainEl[2].children[2].style.visibility = "hidden";
 };
 
-
-const xdivOndragEnter = (ev) => {
-    const tempDiv = document.createElement("div");
-
-    const targetId = ev.dataTransfer.getData("id");
-    const findArrayinx = positionAtls.findIndex((ind) => ind.id == targetId);
-
-    document.getElementById(ev.dataTransfer.getData("id"));
-};
-
-
 const targetInfo =(ev)=> {
   const findArrayinx = positionAtls.findIndex(
     (ind) => ind.name == ev.currentTarget.children[1].innerText
@@ -184,20 +179,25 @@ const exportJs = () => {
   showPos.innerHTML = jsonPos;
 };
 
-function allowDrop(ev) {
+const allowDrop =(ev)=> {
   ev.preventDefault();
 }
+const DontallowDrop =(ev)=> {
+  
+}
 
-function drag(ev) {
+const drag=(ev)=> {
   ev.dataTransfer.setData("text", ev.target.id);
 }
 
 const dropFromHolder = (ev) => {};
 
-function dropFromList(ev) {
+const dropFromList=(ev)=> {
   ev.preventDefault();
   
+  
   if (ev.currentTarget.children.length < 4) {
+
     const data = ev.dataTransfer.getData("id");
 
     var itemDrag = ev.currentTarget.appendChild(document.getElementById(data));
@@ -243,29 +243,30 @@ function dropFromList(ev) {
       ev.currentTarget.children[2].children[1].style.visibility = "hidden";
     }
     targetInfo(ev);
+    console.log(ev.currentTarget);
+    if (dragFromPlace == true ) {
+    
+   
+      const nameDiv = ev.dataTransfer.getData("divData");
+      const preDiv = document.getElementById(nameDiv);
+      
+  
+      preDiv.style.backgroundColor = "#9f9faa";
+  
+      preDiv.children[0].children[0].style.visibility = "hidden";
+      preDiv.children[1].children[0].innerHTML = "keine Auswahl";
+      preDiv.children[1].style.color = "#000000";
+      preDiv.children[1].children[0].style.fontSize = "13px";
+  
+      preDiv.children[2].children[0].style.visibility = "hidden";
+      preDiv.children[2].children[1].style.visibility = "hidden";
+      preDiv.children[2].children[2].style.visibility = "hidden";
+  
+      dragFromPlace = false;
+    }
   }
 
-  if (dragFromPlace == true) {
-    
-
-    console.log(ev.currentTarget.children.length);
-    const nameDiv = ev.dataTransfer.getData("divData");
-    const currentDiv = document.getElementById(nameDiv);
-    
-
-    currentDiv.style.backgroundColor = "#9f9faa";
-
-    currentDiv.children[0].children[0].style.visibility = "hidden";
-    currentDiv.children[1].children[0].innerHTML = "keine Auswahl";
-    currentDiv.children[1].style.color = "#000000";
-    currentDiv.children[1].children[0].style.fontSize = "13px";
-
-    currentDiv.children[2].children[0].style.visibility = "hidden";
-    currentDiv.children[2].children[1].style.visibility = "hidden";
-    currentDiv.children[2].children[2].style.visibility = "hidden";
-
-    dragFromPlace = false;
-  }
+  
 
   
 }
@@ -279,9 +280,7 @@ const generateDiv = () => {
     const xDiv = document.createElement("div");
     xDiv.className = "col";
     xDiv.id = `Xdiv${index}`;
-    xDiv.ondragenter = (event) => {
-      xdivOndragEnter(event);
-    };
+    
     xDiv.ondrag = (event) => {
       allowDrop(event);
     };
@@ -324,9 +323,11 @@ const generateDiv = () => {
       price.className = "float-right";
       price.style.visibility = "hidden";
       nameAtk.innerHTML = "keine Auswahl";
+      nameAtk.style.cursor = 'move';
       nameAtk.ondrop = (event) => {
         dropFromHolder(event);
       };
+      
 
       nameAtk.style.fontSize = "13px";
 
@@ -346,11 +347,7 @@ const generateDiv = () => {
       divInner.ondrop = (event) => {
         dropFromList(event);
       };
-
-      divInner.onclick =(event)=>{
-        targetInfo(event)
-      };
-      
+ 
       secondDiv.appendChild(divInner);
     }
   }
