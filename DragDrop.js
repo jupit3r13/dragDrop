@@ -66,6 +66,8 @@ const positionAtls = [
     y: "",
   },
 ];
+var dragFromPlace = false;
+var dragFromList = false;
 
 const showAtlMenu = (arrayList) => {
   arrayList.map((lists) => {
@@ -81,9 +83,7 @@ const showAtlMenu = (arrayList) => {
     myLiMenu.ondragstart = (event) => {
       dragStart(event);
     };
-    // myLiMenu.ondragend = (event) => {
-    //   dragEnd(event);
-    // };
+   
 
     menuDiv.appendChild(myLiMenu);
   });
@@ -117,10 +117,15 @@ const dragExit = (ev) => {
 function dragStart(ev) {
   ev.dataTransfer.setData("id", ev.currentTarget.id);
   ev.dataTransfer.setData("parentDiv", ev.currentTarget.parentElement.id);
+  dragFromList = true;
 }
 
 function dragSFromHolder(ev) {
   ev.dataTransfer.setData("divData", ev.target.parentElement.id);
+
+  ///////////////////////////////////////////////////////////////////////////////
+  dragFromPlace = true;
+
   const name = ev.target.children[0].innerText;
   const findInx = positionAtls.findIndex((ind) => ind.name == name);
 
@@ -129,23 +134,8 @@ function dragSFromHolder(ev) {
 
 const dragEnd = (ev) => {};
 
-const removeArtikel = (ev) => {
-  const myList = document.getElementById("myList");
-  ev.target.style.visibility = "hidden";
-  const findArrayinx = positionAtls.findIndex(
-    (ind) => ind.name == ev.target.parentElement.id
-  );
-  const artikel = positionAtls[findArrayinx];
-  artikel.name = ev.target.parentElement.id;
-  artikel.x = "";
-  artikel.y = "";
-
-  positionAtls[findArrayinx] = artikel;
-
-  myList.appendChild(ev.target.parentElement);
-};
-
 const handleRemove = (ev) => {
+  console.log("omad tosh");
   const NameRemAtl =
     ev.target.parentElement.parentElement.children[1].children[0].innerText;
 
@@ -160,9 +150,7 @@ const handleRemove = (ev) => {
   myLiMenu.ondragstart = (event) => {
     dragStart(event);
   };
-  // myLiMenu.ondragend = (event) => {
-  //   dragEnd(event);
-  // };
+
   findDivList.appendChild(myLiMenu);
 
   const mainEl = ev.target.parentElement.parentElement.children;
@@ -172,7 +160,6 @@ const handleRemove = (ev) => {
   );
 
   myelemnt.removeChild(myelemnt.lastChild);
-  console.log(myelemnt);
   ev.target.parentElement.parentElement.style.backgroundColor = "#9f9faa";
 
   mainEl[0].children[0].style.visibility = "hidden";
@@ -231,14 +218,13 @@ const dropFromHolder = (ev) => {};
 
 function dropFromList(ev) {
   ev.preventDefault();
-  console.log(ev.currentTarget);
   console.log(ev.currentTarget.children.length);
   if (ev.currentTarget.children.length < 4) {
     const data = ev.dataTransfer.getData("id");
 
-    console.log(data);
     var itemDrag = ev.currentTarget.appendChild(document.getElementById(data));
     itemDrag.style.display = "none";
+    
 
     const findInx = positionAtls.findIndex((artikel) => artikel.id == data);
 
@@ -279,23 +265,35 @@ function dropFromList(ev) {
     } else if (positionAtls[findInx].discountable === 0) {
       ev.currentTarget.children[2].children[1].style.visibility = "hidden";
     }
-  } else {
-    console.log(`nemishe khosgele`);
   }
 
-  
+  if (dragFromPlace == true) {
+    console.log("dragFromPlace");
 
- 
+    console.log(ev.currentTarget.children.length);
+    const nameDiv = ev.dataTransfer.getData("divData");
+    const currentDiv=document.getElementById(nameDiv);
+    console.log(currentDiv);
+    
+    currentDiv.style.backgroundColor = "#9f9faa";
+    
+    currentDiv.children[0].children[0].style.visibility = "hidden";
+    currentDiv.children[1].children[0].innerHTML = "keine Auswahl";
+    currentDiv.children[1].style.color = "#000000";
+    currentDiv.children[1].children[0].style.fontSize = "13px";
+
+    currentDiv.children[2].children[0].style.visibility = "hidden";
+    currentDiv.children[2].children[1].style.visibility = "hidden";
+    currentDiv.children[2].children[2].style.visibility = "hidden";
+
+    dragFromPlace = false;
+
+    
+  }
+
   // targetInfo(ev);
 
-  // switch (ev.currentTarget.lastChild.id) {
-  //   case "artikel1":
-  //     ev.currentTarget.className = "artikel1 ";
-
-  //     var id = ev.dataTransfer.getData("id");
-  //     var parentDiv = ev.dataTransfer.getData("parentDiv");
-  //     document.querySelector(`#${parentDiv} > #${id}`).className =
-  //       "defaultDiv";
+  
 }
 
 const generateDiv = () => {
@@ -384,14 +382,7 @@ const generateDiv = () => {
         onInnerExit(event);
       };
 
-      // divInner.ondragstart = (event) => {
-      //   dragStart(event);
-      // };
-
-      // divInner.ondragend = (event) => {
-      //   dragEnd(event);
-      // };
-
+    
       secondDiv.appendChild(divInner);
     }
   }
