@@ -106,19 +106,25 @@ const dragStart=(ev)=> {
   ev.dataTransfer.setData("parentDiv", ev.currentTarget.parentElement.id);
   
   dragFromList = true;
-}
+
+
+};
 
 const dragSFromHolder=(ev)=> {
-  ev.dataTransfer.setData("divData", ev.target.parentElement.id);
+  
+  ev.dataTransfer.setData("divData", ev.target.id);
   
 
   dragFromPlace = true;
 
-  const name = ev.target.children[0].innerText;
+  const name = ev.target.children[1].innerText;
   const findInx = positionAtls.findIndex((ind) => ind.name == name);
 
   ev.dataTransfer.setData("id", positionAtls[findInx].id);
-}
+
+
+
+};
 
 const handleRemove = (ev) => {
       const NameRemAtl =
@@ -169,7 +175,7 @@ const targetInfo =(ev)=> {
   Object.assign(artikel , {x:name[4] , y:name[9]});
   
   
-}
+};
 
 const exportJs = () => {
   const filtredArtikel = positionAtls.filter((artikel) => artikel.x );
@@ -181,16 +187,16 @@ const exportJs = () => {
 
 const allowDrop =(ev)=> {
   ev.preventDefault();
-}
-const DontallowDrop =(ev)=> {
-  
-}
+};
+
 
 const drag=(ev)=> {
   ev.dataTransfer.setData("text", ev.target.id);
-}
+};
 
-const dropFromHolder = (ev) => {};
+
+
+
 
 const dropFromList=(ev)=> {
   ev.preventDefault();
@@ -206,6 +212,8 @@ const dropFromList=(ev)=> {
     const findInx = positionAtls.findIndex((artikel) => artikel.id == data);
 
     ev.currentTarget.style.backgroundColor = positionAtls[findInx].color;
+    ev.currentTarget.style.cursor = 'move';
+    
 
     ev.currentTarget.children[0].children[0].style.visibility = "visible";
 
@@ -243,7 +251,7 @@ const dropFromList=(ev)=> {
       ev.currentTarget.children[2].children[1].style.visibility = "hidden";
     }
     targetInfo(ev);
-    console.log(ev.currentTarget);
+    
     if (dragFromPlace == true ) {
     
    
@@ -252,6 +260,7 @@ const dropFromList=(ev)=> {
       
   
       preDiv.style.backgroundColor = "#9f9faa";
+      preDiv.style.cursor = 'auto';
   
       preDiv.children[0].children[0].style.visibility = "hidden";
       preDiv.children[1].children[0].innerHTML = "keine Auswahl";
@@ -269,6 +278,10 @@ const dropFromList=(ev)=> {
   
 
   
+};
+
+const  dragOver = (ev)=>{
+  console.log('salam');
 }
 
 const generateDiv = () => {
@@ -281,7 +294,8 @@ const generateDiv = () => {
     xDiv.className = "col";
     xDiv.id = `Xdiv${index}`;
     
-    xDiv.ondrag = (event) => {
+    
+    xDiv.ondragover = (event) => {
       allowDrop(event);
     };
 
@@ -296,7 +310,8 @@ const generateDiv = () => {
       const divIn3 = document.createElement("div");
       divInner.id = `Xdiv${index}ydiv${ind}`;
       divInner.className = "defaultDiv ";
-      divIn2.draggable = true;
+      divInner.draggable = true;
+      
       divIn2.className = "text-center";
       divInner.appendChild(divIn1);
       divInner.appendChild(divIn2);
@@ -323,10 +338,9 @@ const generateDiv = () => {
       price.className = "float-right";
       price.style.visibility = "hidden";
       nameAtk.innerHTML = "keine Auswahl";
-      nameAtk.style.cursor = 'move';
-      nameAtk.ondrop = (event) => {
-        dropFromHolder(event);
-      };
+      
+      
+      
       
 
       nameAtk.style.fontSize = "13px";
@@ -340,6 +354,7 @@ const generateDiv = () => {
       divIn3.appendChild(deposit);
       divIn3.appendChild(discountable);
       divIn3.appendChild(price);
+      
 
       divInner.ondragover = (event) => {
         allowDrop(event);
@@ -347,6 +362,11 @@ const generateDiv = () => {
       divInner.ondrop = (event) => {
         dropFromList(event);
       };
+      divInner.ondragstart= (event)=>{
+        dragSFromHolder(event)
+      }
+      
+      
  
       secondDiv.appendChild(divInner);
     }
